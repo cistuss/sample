@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--suppress ALL -->
+<mapper namespace="org.sample.infra.account.AccountRepository">
+  <select id="selectAll" resultType="org.sample.infra.account.AccountEntity">
+    select * from account where delete_flg = '0'
+  </select>
+  <select id="selectById" resultType="org.sample.infra.account.AccountEntity">
+    select * from account where id = #{id} and delete_flg = '0'
+  </select>
+  <select id="selectByEmail" resultType="org.sample.infra.account.AccountEntity">
+    select * from account where email_address = #{emailAddress} and delete_flg = '0';
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into account (
+      email_address, password, first_name, last_name,
+      register_datetime, register_account_id,
+      update_datetime, update_account_id
+    )
+    values
+    (
+      #{email},
+      #{password},
+      #{firstName}, #{lastName},
+      current_timestamp, null,
+      current_timestamp, null
+    )
+    ;
+  </insert>
+</mapper>
